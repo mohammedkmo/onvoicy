@@ -12,21 +12,22 @@ import ArabicVoice from '../voices/arabic.mp3';
 import EspanolVoice from '../voices/Espanol.mp3';
 import EnglishVoice from '../voices/english.mp3';
 import ChineseVoice from '../voices/Chinese.mp3';
-import PlayIcon from '../components/playIcon'
-import addToMailchimp from 'gatsby-plugin-mailchimp'
-import { Helmet } from "react-helmet"
+import PlayIcon from '../components/playIcon';
+import addToMailchimp from 'gatsby-plugin-mailchimp';
+import { Helmet } from "react-helmet";
 
 
 
 // markup
 const IndexPage = () => {
 
-  const [song, setSong] = useState('');
-  const [play, { stop }] = useSound(song, {
-    volume: 1
-  });
+  const [song, setSong] = useState(EspanolVoice);
+  const [play, { stop }] = useSound(song);
 
-  const [isPlaying, setPlaying] = useState(false);
+  const [espanolIsPlaying, setEspanolPlaying] = useState(false);
+  const [englishIsPlaying, setEnglishPlaying] = useState(false);
+  const [arabicIsPlaying, setArabicPlaying] = useState(false);
+  const [chineseIsPlaying, setChinesePlaying] = useState(false);
 
   const [email, setEmail] = useState('')
 
@@ -48,18 +49,6 @@ const IndexPage = () => {
   }
 
 
-  const isItPlaying = () => {
-
-    if (isPlaying) {
-      stop();
-      setPlaying(false)
-    } else {
-      play();
-      setPlaying(true)
-    }
-
-  }
-
 
   return (
     <main>
@@ -69,24 +58,28 @@ const IndexPage = () => {
         <title>Onvoicy.com</title>
         <link rel="canonical" href="http://onvoicy.com" />
       </Helmet>
+      
 
       <div className="bg-white">
+
+
+
         <div className="container max-w-full header_bg">
 
 
-          <div className="max-w-screen-xl m-auto">
-            <div className="flex flex-row justify-between pt-5 pl-4 lg:pl-0 items-center">
+          <div className="max-w-screen-xl m-auto px-8">
+            <div className="flex flex-row justify-between pt-5 items-center">
               <div className="flex flex-col">
                 <img src={Logo} alt="logo" width="180" />
               </div>
-              <div className="flex flex-col hidden lg:block">
+              <div className="flex flex-col">
 
                 <h1 className="text-white text-lg	">coming soon</h1>
               </div>
             </div>
 
             <div className="flex flex-col lg:flex-row justify-between mt-20 items-center lg:items-end ">
-              <div className="flex flex-col px-4 lg:px-0 w-full lg:w-6/12 flex-wrap mb-20">
+              <div className="flex flex-col  w-full lg:w-6/12 flex-wrap mb-20">
                 <h1 className="text-white text-3xl font-bold	">Voices that Amplify your Content</h1>
                 <p className="text-white mt-2">Go from text to speech with a versatile AI voice generator Now make studio-quality voice overs in minutes. Use onvoicy’s lifelike AI voices for podcasts, videos, and all your professional presentations.</p>
 
@@ -110,7 +103,7 @@ const IndexPage = () => {
           </div>
         </div>
 
-        <div className="bg-white py-40 flex flex-col items-center lg:h-5/6		text-center bg-2-sec justify-center">
+        <div className="bg-white py-40 flex flex-col items-center lg:h-5/6 px-4	text-center bg-2-sec justify-center">
           <div className="max-w-screen-xl">
 
             <h1 className="text-3xl font-bold">Use the Best Text to Speech AI Voices</h1>
@@ -132,8 +125,27 @@ const IndexPage = () => {
                 <div className="relative">
                   <img className="play-image" src={Espanol} alt="" width="100" />
                   <div className=" absolute top-0 right-0  play">
-                    <button name="play1" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(EspanolVoice)} onClick={isItPlaying}>
-                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    <button name="play1" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+
+                      onMouseDown={() => {
+
+                        if(play){
+                          stop()
+                        }
+
+                        setEnglishPlaying(false);
+                        setArabicPlaying(false);
+                        setChinesePlaying(false);
+                        setSong(EspanolVoice)
+                      }}
+
+                      onClick={() => {
+
+                        espanolIsPlaying ? stop() : play();
+                        setEspanolPlaying(!espanolIsPlaying);
+                      }}
+
+                    ><PlayIcon isPlaying={espanolIsPlaying}> </PlayIcon>
                     </button>
                   </div>
                 </div>
@@ -143,8 +155,23 @@ const IndexPage = () => {
                 <div className="relative">
                   <img className="play-image" src={English} alt="" width="100" />
                   <div className=" absolute top-0 right-0  play">
-                    <button name="play2" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(EnglishVoice)} onClick={isItPlaying}>
-                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    <button name="play2" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+                      onMouseDown={() => {
+                        if(play){
+                          stop()
+                        }
+
+                        setArabicPlaying(false);
+                        setChinesePlaying(false);
+                        setEspanolPlaying(false);
+
+                        setSong(EnglishVoice)
+                      }}
+                      onClick={() => {
+
+                        englishIsPlaying ? stop() : play();
+                        setEnglishPlaying(!englishIsPlaying);
+                      }}> <PlayIcon isPlaying={englishIsPlaying}> </PlayIcon>
                     </button>
                   </div>
                 </div>
@@ -154,8 +181,22 @@ const IndexPage = () => {
                 <div className="relative">
                   <img className="play-image" src={Arabic} alt="" width="100" />
                   <div className=" absolute top-0 right-0  play">
-                    <button name="play3" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(ArabicVoice)} onClick={isItPlaying}>
-                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    <button name="play3" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+                      onMouseDown={() => {
+                        if(play){
+                          stop()
+                        }
+                        setEnglishPlaying(false);
+                        setChinesePlaying(false);
+                        setEspanolPlaying(false);
+                        setSong(ArabicVoice)
+                      }}
+                      onClick={() => {
+
+                        arabicIsPlaying ? stop() : play();
+                        setArabicPlaying(!arabicIsPlaying);
+                      }}>
+                      <PlayIcon isPlaying={arabicIsPlaying}> </PlayIcon>
                     </button>
                   </div>
                 </div>
@@ -165,8 +206,23 @@ const IndexPage = () => {
                 <div className="relative">
                   <img className="play-image" src={Chinese} alt="" width="100" />
                   <div className=" absolute top-0 right-0  play">
-                    <button name="play4" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(ChineseVoice)} onClick={isItPlaying}>
-                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    <button name="play4" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+                      onMouseDown={() => {
+                        if(play){
+                          stop()
+                        }
+                        setEnglishPlaying(false);
+                        setArabicPlaying(false);
+                        setEspanolPlaying(false);
+                        stop()
+                        setSong(ChineseVoice)
+                      }}
+                      onClick={() => {
+
+                        chineseIsPlaying ? stop() : play();
+                        setChinesePlaying(!chineseIsPlaying);
+                      }}>
+                      <PlayIcon isPlaying={chineseIsPlaying}> </PlayIcon>
                     </button>
                   </div>
                 </div>
