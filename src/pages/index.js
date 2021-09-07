@@ -1,182 +1,183 @@
-import * as React from "react"
+import React, { useState } from "react"
+import Logo from '../images/logo.svg'
+import Man from '../images/man.png'
+import Espanol from '../images/Vector-1.png'
+import Arabic from '../images/Vector-2.png'
+import English from '../images/Vector-3.png'
+import Chinese from '../images/Vector.png'
+import Arrow from '../images/arrow.png'
+import Split from '../images/split.svg'
+import useSound from 'use-sound';
+import ArabicVoice from '../voices/arabic.mp3';
+import EspanolVoice from '../voices/Espanol.mp3';
+import EnglishVoice from '../voices/english.mp3';
+import ChineseVoice from '../voices/Chinese.mp3';
+import PlayIcon from '../components/playIcon'
+import addToMailchimp from 'gatsby-plugin-mailchimp'
+import { Helmet } from "react-helmet"
 
-// styles
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
-
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
-}
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-// data
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
 
 // markup
 const IndexPage = () => {
+
+  const [song, setSong] = useState('');
+  const [play, { stop }] = useSound(song, {
+    volume: 1
+  });
+
+  const [isPlaying, setPlaying] = useState(false);
+
+  const [email, setEmail] = useState('')
+
+
+
+  const handleMailchimp = async (e) => {
+    e.preventDefault();
+    await addToMailchimp(email)
+      .then(data => {
+        setEmail('')
+        console.log(data)
+      })
+      .catch((e) => {
+
+        console.log(e)
+
+      })
+
+  }
+
+
+  const isItPlaying = () => {
+
+    if (isPlaying) {
+      stop();
+      setPlaying(false)
+    } else {
+      play();
+      setPlaying(true)
+    }
+
+  }
+
+
   return (
-    <main style={pageStyles}>
-      <title>Home Page</title>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        <span role="img" aria-label="Party popper emojis">
-          🎉🎉🎉
-        </span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time.{" "}
-        <span role="img" aria-label="Sunglasses smiley emoji">
-          😎
-        </span>
-      </p>
-      <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
-            {docLink.text}
-          </a>
-        </li>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
+    <main>
+
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Onvoicy.com</title>
+        <link rel="canonical" href="http://onvoicy.com" />
+      </Helmet>
+
+      <div className="bg-white">
+        <div className="container max-w-full header_bg">
+
+
+          <div className="max-w-screen-xl m-auto">
+            <div className="flex flex-row justify-between pt-5 pl-4 lg:pl-0 items-center">
+              <div className="flex flex-col">
+                <img src={Logo} alt="logo" width="180" />
+              </div>
+              <div className="flex flex-col hidden lg:block">
+
+                <h1 className="text-white text-lg	">coming soon</h1>
+              </div>
+            </div>
+
+            <div className="flex flex-col lg:flex-row justify-between mt-20 items-center lg:items-end ">
+              <div className="flex flex-col px-4 lg:px-0 w-full lg:w-6/12 flex-wrap mb-20">
+                <h1 className="text-white text-3xl font-bold	">Voices that Amplify your Content</h1>
+                <p className="text-white mt-2">Go from text to speech with a versatile AI voice generator Now make studio-quality voice overs in minutes. Use onvoicy’s lifelike AI voices for podcasts, videos, and all your professional presentations.</p>
+
+
+              </div>
+              <div className="flex flex-col px-4 lg:px-0 w-full lg:w-6/12 items-end relative">
+
+
+
+
+                <form className="m-4 flex flex-col items-start absolute bottom-4 lg:bottom-12 right-0">
+                  <p className="text-white  w-full lg:w-96	">To be able to share with you our latest news, subscribe to our newsletter</p>
+                  <input value={email} onChange={e => setEmail(e.target.value)} type="email" name="email" autoComplete="on" className="rounded-l-lg py-4 pl-4 pr-3 w-full pr-48 mr-0	mt-1 text-white subscribe_form relative" placeholder="your@mail.com" />
+                  <button name="subscribe" className="px-8 rounded-r-lg email_btn text-white font-bold p-3 absolute right-1 bottom-1" onClick={handleMailchimp}>Subscribe</button>
+                </form>
+
+                <img src={Man} alt="logo" width="430" />
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white py-40 flex flex-col items-center lg:h-5/6		text-center bg-2-sec justify-center">
+          <div className="max-w-screen-xl">
+
+            <h1 className="text-3xl font-bold">Use the Best Text to Speech AI Voices</h1>
+            <img className="mt-1 m-auto" src={Split} alt="" />
+            <p className="mt-4  px-4 lg:px-0 lg:w-6/12	m-auto">Choose from a growing library of 200+ natural sounding voices with humanlike intonation in 30+ languages and accents powered by machine learning technology.</p>
+
+
+
+            <div className="flex px-4 lg:px-0 space-x-2 lg:space-x-6 items-center justify-center mt-16 relative">
+
+              <div className="absolute left-1/4 -top-10 hidden lg:block">
+                <img className="static" src={Arrow} alt="" width="140" />
+                <p className="hand-font absolute -left-20 botton-0">click and listen</p>
+              </div>
+
+
+              <div className="flex flex-col">
+
+                <div className="relative">
+                  <img className="play-image" src={Espanol} alt="" width="100" />
+                  <div className=" absolute top-0 right-0  play">
+                    <button name="play1" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(EspanolVoice)} onClick={isItPlaying}>
+                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-500 mt-1">Español</p>
+              </div>
+              <div className="flex flex-col">
+                <div className="relative">
+                  <img className="play-image" src={English} alt="" width="100" />
+                  <div className=" absolute top-0 right-0  play">
+                    <button name="play2" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(EnglishVoice)} onClick={isItPlaying}>
+                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-500 mt-1">English</p>
+              </div>
+              <div className="flex flex-col">
+                <div className="relative">
+                  <img className="play-image" src={Arabic} alt="" width="100" />
+                  <div className=" absolute top-0 right-0  play">
+                    <button name="play3" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(ArabicVoice)} onClick={isItPlaying}>
+                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-500 mt-1 arabic-text">عربي</p>
+              </div>
+              <div className="flex flex-col">
+                <div className="relative">
+                  <img className="play-image" src={Chinese} alt="" width="100" />
+                  <div className=" absolute top-0 right-0  play">
+                    <button name="play4" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start" onMouseDown={() => setSong(ChineseVoice)} onClick={isItPlaying}>
+                      <PlayIcon isPlaying={isPlaying}> </PlayIcon>
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-500 mt-1">中国人</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="m-auto text-center mb-10">made with love By <a className="brand-text-color" href="https://onvoicy.com">onvoicy.com</a></p>
+      </div>
     </main>
   )
 }

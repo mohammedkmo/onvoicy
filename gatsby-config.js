@@ -4,14 +4,24 @@ module.exports = {
     title: "onvoicy.com",
   },
   plugins: [
-    "gatsby-plugin-sass",
-    "gatsby-plugin-image",
     {
-      resolve: "gatsby-plugin-google-analytics",
+      resolve: 'gatsby-plugin-mailchimp',
       options: {
-        trackingId: "",
+          endpoint: 'https://Bepix.us19.list-manage.com/subscribe/post?u=1744b29cea49b1c92c874fb60&amp;id=1e660a62e8', // string; add your MC list endpoint here; see instructions below
+          timeout: 3500, // number; the amount of time, in milliseconds, that you want to allow mailchimp to respond to your request before timing out. defaults to 3500
+      },
+  },
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        postCssPlugins: [
+          require("tailwindcss"),
+         // require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
+        ],
       },
     },
+    "gatsby-plugin-image",
+    
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
