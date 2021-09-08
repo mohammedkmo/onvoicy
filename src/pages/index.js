@@ -25,7 +25,7 @@ import translationAr from '../lang/ar';
 
 
 i18n.use(initReactI18next).init({
-  lng: 'ar',
+  lng: 'en',
   fallbackLng: 'en',
   interpolation: { escapeValue: false },
   debug: true,
@@ -99,7 +99,7 @@ const IndexPage = () => {
         <div className="container max-w-full header_bg">
 
 
-          <div className="max-w-screen-xl m-auto px-8">
+          <div className="max-w-screen-xl m-auto px-4">
             <div className="flex flex-row justify-between pt-5 items-center">
               <div className="flex flex-col">
                 <img src={Logo} alt="logo" width="180" />
@@ -108,18 +108,18 @@ const IndexPage = () => {
 
                 <button onClick={ChangLang} className="text-white text-lg	flex">
 
-                  
+
 
                   <span>{t('anotherLang')}</span>
 
                   <span className="mx-1"></span>
-                  
+
 
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                   </svg>
-                  
-                  </button>
+
+                </button>
               </div>
             </div>
 
@@ -152,7 +152,7 @@ const IndexPage = () => {
         <div className="bg-white py-40 flex flex-col items-center lg:h-5/6 px-4	text-center bg-2-sec justify-center">
           <div className="max-w-screen-xl">
 
-            <h1 className="text-3xl font-bold">{t('sec2Title')}</h1>
+            <h1 className="text-3xl font-bold px-4 m-auto lg:px-0 lg:w-6/12">{t('sec2Title')}</h1>
             <img className="mt-1 m-auto" src={Split} alt="" />
             <p className="mt-4  px-4 lg:px-0 lg:w-6/12	m-auto">{t('sec2Desc')}</p>
 
@@ -168,64 +168,67 @@ const IndexPage = () => {
 
 
 
-                <div className="flex flex-col mx-1 lg:mx-3">
+                <div className="flex flex-col lg:flex-row">
+                  <div className="flex flex-col m-4 lg:m-0 lg:mx-3">
 
-                  <div className="relative">
-                    <img className="play-image" src={Espanol} alt="" width="100" />
-                    <div className=" absolute top-0 right-0  play">
-                      <button name="play1" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+                    <div className="relative">
+                      <img className="play-image" src={Espanol} alt="" width="100" />
+                      <div className=" absolute top-0 right-0  play">
+                        <button name="play1" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
 
-                        onMouseDown={() => {
+                          onMouseDown={() => {
 
-                          if (play) {
-                            stop()
-                          }
+                            if (play) {
+                              stop()
+                            }
 
-                          setEnglishPlaying(false);
-                          setArabicPlaying(false);
-                          setChinesePlaying(false);
-                          setSong(EspanolVoice)
-                        }}
+                            setEnglishPlaying(false);
+                            setArabicPlaying(false);
+                            setChinesePlaying(false);
+                            setSong(EspanolVoice)
+                          }}
 
-                        onClick={() => {
+                          onClick={() => {
 
-                          espanolIsPlaying ? stop() : play();
-                          setEspanolPlaying(!espanolIsPlaying);
-                        }}
+                            espanolIsPlaying ? stop() : play();
+                            setEspanolPlaying(!espanolIsPlaying);
+                          }}
 
-                      ><PlayIcon isPlaying={espanolIsPlaying}> </PlayIcon>
-                      </button>
+                        ><PlayIcon isPlaying={espanolIsPlaying}> </PlayIcon>
+                        </button>
+                      </div>
                     </div>
+                    <p className="text-gray-500 mt-1">Español</p>
                   </div>
-                  <p className="text-gray-500 mt-1">Español</p>
-                </div>
-                <div className="flex flex-col mx-1 lg:mx-3">
-                  <div className="relative">
-                    <img className="play-image" src={English} alt="" width="100" />
-                    <div className=" absolute top-0 right-0  play">
-                      <button name="play2" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
-                        onMouseDown={() => {
-                          if (play) {
-                            stop()
-                          }
+                  <div className="flex flex-col m-4 lg:m-0 lg:mx-3">
+                    <div className="relative">
+                      <img className="play-image" src={English} alt="" width="100" />
+                      <div className=" absolute top-0 right-0  play">
+                        <button name="play2" className="rounded-full p-2 w-10 h-10 back-drop text-white text-start"
+                          onMouseDown={() => {
+                            if (play) {
+                              stop()
+                            }
 
-                          setArabicPlaying(false);
-                          setChinesePlaying(false);
-                          setEspanolPlaying(false);
+                            setArabicPlaying(false);
+                            setChinesePlaying(false);
+                            setEspanolPlaying(false);
 
-                          setSong(EnglishVoice)
-                        }}
-                        onClick={() => {
+                            setSong(EnglishVoice)
+                          }}
+                          onClick={() => {
 
-                          englishIsPlaying ? stop() : play();
-                          setEnglishPlaying(!englishIsPlaying);
-                        }}> <PlayIcon isPlaying={englishIsPlaying}> </PlayIcon>
-                      </button>
+                            englishIsPlaying ? stop() : play();
+                            setEnglishPlaying(!englishIsPlaying);
+                          }}> <PlayIcon isPlaying={englishIsPlaying}> </PlayIcon>
+                        </button>
+                      </div>
                     </div>
+                    <p className="text-gray-500 mt-1">English</p>
                   </div>
-                  <p className="text-gray-500 mt-1">English</p>
                 </div>
-                <div className="flex flex-col mx-1 lg:mx-3">
+                <div className="flex flex-col lg:flex-row">
+                <div className="flex flex-col m-4 lg:m-0 lg:mx-3">
                   <div className="relative">
                     <img className="play-image" src={Arabic} alt="" width="100" />
                     <div className=" absolute top-0 right-0  play">
@@ -250,7 +253,7 @@ const IndexPage = () => {
                   </div>
                   <p className="text-gray-500 mt-1">عربي</p>
                 </div>
-                <div className="flex flex-col mx-1 lg:mx-3">
+                <div className="flex flex-col m-4 lg:m-0 lg:mx-3">
                   <div className="relative">
                     <img className="play-image" src={Chinese} alt="" width="100" />
                     <div className=" absolute top-0 right-0  play">
@@ -275,6 +278,7 @@ const IndexPage = () => {
                     </div>
                   </div>
                   <p className="text-gray-500 mt-1">中国人</p>
+                </div>
                 </div>
               </div>
             </div>
