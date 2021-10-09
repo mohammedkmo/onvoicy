@@ -19,7 +19,7 @@ import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import translationEn from '../lang/en';
 import translationAr from '../lang/ar';
-
+import LiveChat from 'react-livechat'
 
 
 
@@ -66,7 +66,7 @@ const IndexPage = () => {
 
         console.log(e)
 
-      })
+      }) 
 
   }
 
@@ -76,8 +76,6 @@ const IndexPage = () => {
 
   const lang = t('lang');
   const dir = t('dir');
-
-
 
   return (
     <main>
@@ -89,6 +87,10 @@ const IndexPage = () => {
         <meta charSet="utf-8" />
         <title>Onvoicy.com</title>
         <link rel="canonical" href="http://onvoicy.com" />
+      
+
+  
+
       </Helmet>
 
 
@@ -132,10 +134,6 @@ const IndexPage = () => {
 
               </div>
               <div className="flex flex-col px-4 lg:px-0 w-full lg:w-6/12 items-end relative">
-
-
-
-
                 <form className="m-4 flex flex-col items-start absolute bottom-4 lg:bottom-12 start-0">
                   <p className="text-white  w-full lg:w-96	">{t('subDesc')}</p>
                   <input value={email} onChange={e => setEmail(e.target.value)} type="email" name="email" autoComplete="on" className="rounded-l-lg py-4 pl-4 text-left pr-3 w-full pr-48 mr-0	mt-1 text-white subscribe_form relative" placeholder="your@mail.com" />
@@ -287,6 +285,9 @@ const IndexPage = () => {
 
         <p className="m-auto text-center mb-10">{t('copyright')} <a className="brand-text-color" href="https://onvoicy.com">onvoicy.com</a></p>
       </div>
+
+      <LiveChat license={13189809} />
+ 
     </main>
   )
 }
