@@ -19,7 +19,7 @@ import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import translationEn from '../lang/en';
 import translationAr from '../lang/ar';
-import LiveChat from 'react-livechat';
+import LiveChat from '../utils/react-livechat';
 
 
 
